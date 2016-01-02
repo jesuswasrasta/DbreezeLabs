@@ -1,5 +1,6 @@
 ﻿#region Usings
 using System.IO;
+using System.Threading;
 
 using NUnit.Framework;
 
@@ -51,8 +52,7 @@ namespace DbreezeLabs.Tests
 				Name = "John Doe"
 			};
 
-			_repository.Insert(customer);
-
+			_repository.Upsert(customer);
 			var selectedCustomer = _repository.Select(1);
 
 			Assert.AreEqual(customer, selectedCustomer);
@@ -65,7 +65,7 @@ namespace DbreezeLabs.Tests
 			for (int i = 0; i < 1000; i++)
 			{
 				var customer = new Customer { Id = i, Name = "John Doe" };
-				_repository.Insert(customer);
+				_repository.Upsert(customer);
 			}
 		}
 	}

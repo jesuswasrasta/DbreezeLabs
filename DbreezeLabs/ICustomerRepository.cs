@@ -8,7 +8,7 @@ namespace DbreezeLabs
 {
     public interface ICustomerRepository
     {
-	    void Insert(Customer customer);
+	    void Upsert(Customer customer);
 
 	    void Clear();
     }

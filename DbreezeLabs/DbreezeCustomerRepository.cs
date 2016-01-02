@@ -31,7 +31,7 @@ namespace DbreezeLabs
 		#endregion
 
 
-		public void Insert(Customer customer)
+		public void Upsert(Customer customer)
 		{
 			using (var tran = _engine.GetTransaction())
 			{
