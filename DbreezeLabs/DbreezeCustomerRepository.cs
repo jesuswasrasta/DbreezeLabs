@@ -1,5 +1,7 @@
 using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 
 using DBreeze;
 using DBreeze.DataTypes;
@@ -39,6 +41,17 @@ namespace DbreezeLabs
 				tran.Commit();
 			}
 		}
+
+		public void Upsert(IEnumerable<Customer> customers)
+		{
+			var dic = customers.ToDictionary(customer => customer.Id);
+			using (var tran = _engine.GetTransaction())
+			{
+				tran.InsertDictionary<long, Customer>(CustomersTable, dic, false);
+				tran.Commit();
+			}
+		}
+
 
 		public Customer Select(long customerId)
 		{

@@ -1,4 +1,5 @@
 ﻿#region Usings
+using System.Collections.Generic;
 using System.IO;
 using System.Threading;
 
@@ -44,7 +45,7 @@ namespace DbreezeLabs.Tests
 		}
 
 		[Test]
-		public void Insert_Test()
+		public void Upsert_Test()
 		{
 			var customer = new Customer
 			{
@@ -59,14 +60,28 @@ namespace DbreezeLabs.Tests
 		}
 
 		[Test, Timeout(100000)]
-		public void Insert_Bulk_Test()
+		public void Upsert_SIngle_Bulk_Test()
 		{
-
+			//Slow
 			for (int i = 0; i < 1000; i++)
 			{
 				var customer = new Customer { Id = i, Name = "John Doe" };
 				_repository.Upsert(customer);
 			}
+		}
+
+		[Test, Timeout(100000)]
+		public void Upsert_Bulk_Test()
+		{
+			//Quick!!!
+			var customers = new List<Customer>();
+			for (int i = 0; i < 1000; i++)
+			{
+				var customer = new Customer { Id = i, Name = "John Doe" };
+				customers.Add(customer);
+			}
+
+			_repository.Upsert(customers);
 		}
 	}
 }
